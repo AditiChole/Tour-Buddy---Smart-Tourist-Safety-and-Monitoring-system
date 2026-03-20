@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TourBuddy Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="page-shell app-page-shell">
+    <section class="page-intro">
+      <div>
+        <span class="eyebrow">Screen 01</span>
+        <h1>Dashboard</h1>
+        <p>Home view with travel status, quick trip actions, and recent alerts.</p>
+      </div>
+      <a class="back-home" href="/">All Screens</a>
+    </section>
+
+    <article class="phone-frame single-phone">
+      <div class="phone-top">
+        <span class="camera"></span>
+        <span class="speaker"></span>
+      </div>
+      <div class="screen">
+        <header class="app-header">
+          <span class="app-logo">tb</span>
+          <h2>Dashboard</h2>
+          <span class="menu-icon">&#9776;</span>
+        </header>
+
+        <div class="screen-body">
+          <p class="welcome-title">Welcome, Aditi!</p>
+
+          <section class="card safe-card">
+            <div class="safe-badge">&#10003;</div>
+            <div>
+              <p class="card-line">You are <strong>SAFE</strong> in this area</p>
+              <p class="sub-line">Current Location: Classroom Block</p>
+            </div>
+          </section>
+
+          <div class="action-row">
+            <button class="action-button success" type="button">Start Trip</button>
+            <button class="action-button warning" type="button">Share Location</button>
+          </div>
+
+          <section class="card alerts-card">
+            <div>
+              <p class="section-title">Recent Alerts</p>
+              <p class="alert-line">No recent alerts</p>
+            </div>
+            <div class="mini-illustration"></div>
+          </section>
+        </div>
+
+        <nav class="bottom-nav">
+          <a class="active" href="/dashboard">Home</a>
+          <a href="/tracking">Map</a>
+          <a href="/sos">SOS</a>
+          <a href="/itinerary">Itinerary</a>
+          <a href="/profile">Profile</a>
+        </nav>
+      </div>
+    </article>
+  </main>
+</body>
+</html>
