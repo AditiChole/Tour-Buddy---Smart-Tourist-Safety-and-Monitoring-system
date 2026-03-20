@@ -1,0 +1,31 @@
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+.venv_*/
+.venv-broken/
+.venv_broken/
+venv/
+ENV/
+
+# Common tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+
+# TourBuddy AI generated artifacts
+ai_server/model/*.pkl
+ai_server/model/*.joblib
+ai_server/dataset/heatmap_points.csv
+ai_server/dataset/_tmp_train_split.csv
+
+# Node
+node_modules/
+backend/.env
