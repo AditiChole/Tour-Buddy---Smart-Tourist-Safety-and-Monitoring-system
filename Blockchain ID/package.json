@@ -1,0 +1,12 @@
+{
+  "name": "tourbuddy-node-server",
+  "version": "1.0.0",
+  "description": "TourBuddy backend services",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
