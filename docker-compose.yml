@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+
+  postgresql:
+    image: postgres:latest
+    container_name: postgresql
+    environment:
+      POSTGRES_USER: exampleuser
+      POSTGRES_PASSWORD: examplepassword
+      POSTGRES_DB: exampledb
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - '5000:5000'
+    depends_on:
+      - mongodb
+      - postgresql
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend
+
+  ai_server:
+    build:
+      context: ./ai_server
+    container_name: ai_server
+    ports:
+      - '8080:8080'
+    depends_on:
+      - backend
+
+volumes:
+  mongodb_data:
+  postgres_data:
