@@ -1,31 +1,23 @@
-# Python caches
-__pycache__/
-*.py[cod]
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Virtual environments
-.venv/
-.venv_*/
-.venv-broken/
-.venv_broken/
-venv/
-ENV/
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-# Common tooling caches
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.ipynb_checkpoints/
+# testing
+/coverage
 
-# OS/editor
+# production
+/build
+
+# misc
 .DS_Store
-Thumbs.db
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# TourBuddy AI generated artifacts
-ai_server/model/*.pkl
-ai_server/model/*.joblib
-ai_server/dataset/heatmap_points.csv
-ai_server/dataset/_tmp_train_split.csv
-
-# Node
-node_modules/
-backend/.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
