@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TourBuddy Authority Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+  </head>
+  <body>
+    <div class="page-shell">
+      <section class="login-panel" id="loginPanel">
+        <form class="login-card" id="loginForm">
+          <div>
+            <p class="eyebrow">TourBuddy Authority Access</p>
+            <h2>Authority Login</h2>
+            <p class="card-copy">
+              Sign in with your authority ID to access the monitoring console.
+            </p>
+          </div>
+
+          <label class="field">
+            <span>Officer Name</span>
+            <input
+              type="text"
+              id="officerName"
+              placeholder="Aarav Sharma"
+              required
+            />
+          </label>
+
+          <label class="field">
+            <span>Authority ID</span>
+            <input
+              type="text"
+              id="authorityId"
+              placeholder="AUTH-IND-2048"
+              required
+            />
+          </label>
+
+          <label class="field">
+            <span>Department</span>
+            <select id="department">
+              <option>Tourism Control</option>
+              <option>Police Response</option>
+              <option>Emergency Operations</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Passcode</span>
+            <input
+              type="password"
+              id="passcode"
+              placeholder="Enter secure passcode"
+              required
+            />
+          </label>
+
+          <button type="submit" class="primary-btn">Login</button>
+          <p class="demo-note">
+            Demo login accepts any details and stores your session locally.
+          </p>
+        </form>
+      </section>
+
+      <main class="dashboard hidden" id="dashboard">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Authority Dashboard</p>
+            <h2>Tourist Safety Monitoring Grid</h2>
+          </div>
+          <div class="topbar-actions">
+            <div class="status-pill">
+              <span class="status-dot"></span>
+              System live
+            </div>
+            <button class="secondary-btn" id="logoutBtn">Log Out</button>
+          </div>
+        </header>
+
+        <section class="hero-grid">
+          <article class="profile-card card">
+            <div class="profile-top">
+              <div class="avatar" id="avatarInitials">AS</div>
+              <div>
+                <p class="muted-label">Signed in as</p>
+                <h3 id="profileName">Aarav Sharma</h3>
+                <p id="profileDepartment">Tourism Control Officer</p>
+              </div>
+            </div>
+            <div class="profile-meta">
+              <div>
+                <span>Authority ID</span>
+                <strong id="profileId">AUTH-IND-2048</strong>
+              </div>
+              <div>
+                <span>Shift</span>
+                <strong>06:00 - 18:00 IST</strong>
+              </div>
+              <div>
+                <span>Region</span>
+                <strong>Nagpur Tourist Belt</strong>
+              </div>
+              <div>
+                <span>Clearance</span>
+                <strong>Level 4 Secure</strong>
+              </div>
+            </div>
+            <div class="id-card">
+              <div>
+                <p>Digital Authority Pass</p>
+                <strong id="idCardNumber">TB-AUTH-2048</strong>
+              </div>
+              <div class="id-chip"></div>
+            </div>
+          </article>
+
+          <article class="map-card card">
+            <div class="section-heading">
+              <div>
+                <p class="muted-label">Geo Monitoring</p>
+                <h3>Live Geo-Fencing Map</h3>
+              </div>
+              <span class="tag danger" id="zoneStatusLabel">4 critical zones</span>
+            </div>
+
+            <div class="map-surface">
+              <div id="leafletMap" class="leaflet-map"></div>
+            </div>
+
+            <div class="map-legend">
+              <span><i class="legend-dot red"></i>Red: immediate dispatch</span>
+              <span><i class="legend-dot amber"></i>Amber: anomaly detected</span>
+              <span><i class="legend-dot green"></i>Green: normal traffic</span>
+            </div>
+
+            <div class="geo-feed" id="geoFeed"></div>
+          </article>
+        </section>
+
+        <section class="stats-grid">
+          <article class="stat-card card accent-red">
+            <span class="stat-label">Active SOS Requests</span>
+            <strong id="activeSosCount">24</strong>
+            <p id="activeSosNote">7 new in the last 30 minutes</p>
+          </article>
+          <article class="stat-card card accent-blue">
+            <span class="stat-label">Tourists Under Watch</span>
+            <strong id="touristWatchCount">1,248</strong>
+            <p id="touristWatchNote">114 in geofenced red corridors</p>
+          </article>
+          <article class="stat-card card accent-gold">
+            <span class="stat-label">Average Response Time</span>
+            <strong id="responseTime">06m 42s</strong>
+            <p id="responseNote">Improved by 18% this week</p>
+          </article>
+          <article class="stat-card card accent-green">
+            <span class="stat-label">Resolved Incidents</span>
+            <strong id="resolvedCount">182</strong>
+            <p id="resolvedNote">92% closure rate within SLA</p>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="card alerts-card">
+            <div class="section-heading">
+              <div>
+                <p class="muted-label">Priority Queue</p>
+                <h3>Live SOS Requests</h3>
+              </div>
+              <button class="secondary-btn small">Export Log</button>
+            </div>
+
+            <div class="control-row">
+              <label class="field compact-field">
+                <span>Risk Filter</span>
+                <select id="riskFilter">
+                  <option value="all">All incidents</option>
+                  <option value="Critical">Critical only</option>
+                  <option value="High">High and above</option>
+                  <option value="Moderate">Moderate and above</option>
+                </select>
+              </label>
+              <div class="status-pill" id="lastRefreshLabel">
+                <span class="status-dot"></span>
+                Last refresh: just now
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tourist</th>
+                    <th>Location</th>
+                    <th>Issue</th>
+                    <th>Risk</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="alertsTableBody"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="card analytics-card">
+            <div class="section-heading">
+              <div>
+                <p class="muted-label">Risk Analytics</p>
+                <h3>SOS Trend by Zone</h3>
+              </div>
+              <span class="tag neutral">Last 7 days</span>
+            </div>
+
+            <div class="chart-bars">
+              <div class="bar-group">
+                <span class="bar" style="height: 48%"></span>
+                <label>Sitabuldi</label>
+              </div>
+              <div class="bar-group">
+                <span class="bar" style="height: 76%"></span>
+                <label>Futala Lake</label>
+              </div>
+              <div class="bar-group">
+                <span class="bar" style="height: 58%"></span>
+                <label>Deekshabhoomi</label>
+              </div>
+              <div class="bar-group">
+                <span class="bar" style="height: 32%"></span>
+                <label>Ambazari</label>
+              </div>
+              <div class="bar-group">
+                <span class="bar" style="height: 85%"></span>
+                <label>Seminary Hills</label>
+              </div>
+            </div>
+
+            <div class="insight-list">
+              <div>
+                <span>AI prediction</span>
+                <strong>Sitabuldi congestion risk rising after 18:30</strong>
+              </div>
+              <div>
+                <span>Recommendation</span>
+                <strong>Deploy 2 more volunteers near Futala Lake corridor</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="card response-card">
+            <div class="section-heading">
+              <div>
+                <p class="muted-label">Response System</p>
+                <h3>Operational Actions</h3>
+              </div>
+            </div>
+
+            <div class="action-list">
+              <button class="action-btn">Dispatch nearest patrol</button>
+              <button class="action-btn">Notify volunteer network</button>
+              <button class="action-btn">Generate e-FIR draft</button>
+              <button class="action-btn">Share safe route advisory</button>
+            </div>
+
+            <div class="timeline" id="timelineFeed"></div>
+          </article>
+
+          <article class="card tracking-card">
+            <div class="section-heading">
+              <div>
+                <p class="muted-label">Identity & Cases</p>
+                <h3>Tourist ID + Missing Cases</h3>
+              </div>
+            </div>
+
+            <div class="mini-panels">
+              <div class="mini-panel">
+                <span>Digital IDs active</span>
+                <strong>3,428</strong>
+                <p>182 expiring in the next 12 hours</p>
+              </div>
+              <div class="mini-panel">
+                <span>Missing person trackers</span>
+                <strong>06</strong>
+                <p>2 cases auto-filled into e-FIR queue</p>
+              </div>
+            </div>
+
+            <ul class="case-list">
+              <li>
+                <strong>CASE-MP-18</strong>
+                <span>Tourist ID TB-8841 last seen near Sitabuldi Metro</span>
+              </li>
+              <li>
+                <strong>CASE-MP-15</strong>
+                <span>Family verification pending with hotel desk</span>
+              </li>
+              <li>
+                <strong>CASE-MP-12</strong>
+                <span>Auto-generated FIR PDF ready for approval</span>
+              </li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
